@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class sea_screen extends StatefulWidget {
   const sea_screen({super.key});
@@ -10,6 +11,8 @@ class sea_screen extends StatefulWidget {
 class _sea_screenState extends State<sea_screen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+
+    );
   }
 }
