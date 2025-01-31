@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class FoodCarousel extends StatefulWidget {
-  const FoodCarousel({super.key});
+class DessertCarousel extends StatefulWidget {
+  const DessertCarousel({super.key});
 
   @override
-  State<FoodCarousel> createState() => _FoodCarouselState();
+  State<DessertCarousel> createState() => _DessertCarouselState();
 }
 
-class _FoodCarouselState extends State<FoodCarousel> {
+class _DessertCarouselState extends State<DessertCarousel> {
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
-  List<dynamic> foods = [];
-  bool isLoading = true; // Add loading flag
+  List<dynamic> desserts = [];
+  bool isLoading = true;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    fetchFoods();
+    fetchDesserts();
   }
 
-  Future<void> fetchFoods() async {
+  Future<void> fetchDesserts() async {
     try {
       final response = await http.get(Uri.parse('https://python-food-raw-api-1.onrender.com/api/foods'));
 
@@ -28,13 +28,13 @@ class _FoodCarouselState extends State<FoodCarousel> {
         final decodedResponse = utf8.decode(response.bodyBytes); // Decode the response
         final data = json.decode(decodedResponse);
         setState(() {
-          foods = data['data']
-              .where((food) => food['category']['category_name'] == 'Dish') // Filter by category_name
+          desserts = data['data']
+              .where((food) => food['category']['category_name'] == 'Dessert') // Filter by category_name
               .toList(); // Convert the filtered data back to a list
           isLoading = false; // Stop loading
         });
       } else {
-        throw Exception('Failed to load foods');
+        throw Exception('Failed to load dessert');
       }
     } catch (e) {
       setState(() {
@@ -42,6 +42,7 @@ class _FoodCarouselState extends State<FoodCarousel> {
       });
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +56,9 @@ class _FoodCarouselState extends State<FoodCarousel> {
           height: 280, // Height for the food carousel
           child: PageView.builder(
             controller: controller,
-            itemCount: foods.length,
+            itemCount: desserts.length,
             itemBuilder: (_, index) {
-              final food = foods[index];
+              final food = desserts[index];
               return Container(
                 margin: const EdgeInsets.only(left: 12, bottom: 12, right: 12),
                 padding: const EdgeInsets.all(10),

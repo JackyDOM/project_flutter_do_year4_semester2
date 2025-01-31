@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project1/data/bannerData.dart';
+import 'package:project1/data/dessertData.dart';
+import 'package:project1/data/soupData.dart';
 
 import '../data/foodData.dart';
 
@@ -26,7 +28,7 @@ class food_screen extends StatelessWidget {
                         'Food Recipe',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFFFF8C00), // Orange color
+                          color: Color(0xFFB25A0D), // Orange color
                           fontSize: 24,
                         ),
                         textAlign: TextAlign.center,
@@ -36,7 +38,7 @@ class food_screen extends StatelessWidget {
                         'More details about the recipe will go here.',
                         style: const TextStyle(
                           fontWeight: FontWeight.normal,
-                          color: Colors.blueGrey,
+                          color: Color(0xFF918F8F),
                           fontSize: 16,
                         ),
                         textAlign: TextAlign.center,
@@ -44,6 +46,7 @@ class food_screen extends StatelessWidget {
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 16),
                 const BannerData(), // Banner widget that will scroll
 
@@ -103,6 +106,37 @@ class food_screen extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: 16),
+                const DessertCarousel(),
+
+                Container(
+                  margin: EdgeInsets.only(top: 10, left: 10),
+                  alignment: Alignment.centerLeft, // Aligns the content to the left
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.soup_kitchen, // You can replace this with any icon of your choice
+                            color: Color(0xFF303F9F), // Orange color for the icon
+                          ),
+                          SizedBox(width: 8), // Adds some space between the icon and text
+                          Text(
+                            "Soup",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF3F51B5), // Orange color for the text
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const SoupCarousel(),
               ],
             ),
           ),

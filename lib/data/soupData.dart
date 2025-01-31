@@ -2,25 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class FoodCarousel extends StatefulWidget {
-  const FoodCarousel({super.key});
+class SoupCarousel extends StatefulWidget {
+  const SoupCarousel({super.key});
 
   @override
-  State<FoodCarousel> createState() => _FoodCarouselState();
+  State<SoupCarousel> createState() => _SoupCarouselState();
 }
 
-class _FoodCarouselState extends State<FoodCarousel> {
+class _SoupCarouselState extends State<SoupCarousel> {
   final controller = PageController(viewportFraction: 0.8, keepPage: true);
-  List<dynamic> foods = [];
+  List<dynamic> soups = [];
   bool isLoading = true; // Add loading flag
 
   @override
   void initState() {
     super.initState();
-    fetchFoods();
+    fetchSoups();
   }
 
-  Future<void> fetchFoods() async {
+  Future<void> fetchSoups() async {
     try {
       final response = await http.get(Uri.parse('https://python-food-raw-api-1.onrender.com/api/foods'));
 
@@ -28,13 +28,13 @@ class _FoodCarouselState extends State<FoodCarousel> {
         final decodedResponse = utf8.decode(response.bodyBytes); // Decode the response
         final data = json.decode(decodedResponse);
         setState(() {
-          foods = data['data']
-              .where((food) => food['category']['category_name'] == 'Dish') // Filter by category_name
+          soups = data['data']
+              .where((soup) => soup['category']['category_name'] == 'Soup') // Filter by category_name
               .toList(); // Convert the filtered data back to a list
           isLoading = false; // Stop loading
         });
       } else {
-        throw Exception('Failed to load foods');
+        throw Exception('Failed to load soups.');
       }
     } catch (e) {
       setState(() {
@@ -43,21 +43,21 @@ class _FoodCarouselState extends State<FoodCarousel> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator()); // Show loading indicator
     }
-
     return Column(
       children: [
         SizedBox(
           height: 280, // Height for the food carousel
           child: PageView.builder(
             controller: controller,
-            itemCount: foods.length,
+            itemCount: soups.length,
             itemBuilder: (_, index) {
-              final food = foods[index];
+              final food = soups[index];
               return Container(
                 margin: const EdgeInsets.only(left: 12, bottom: 12, right: 12),
                 padding: const EdgeInsets.all(10),

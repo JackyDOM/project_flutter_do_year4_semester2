@@ -67,7 +67,7 @@ class _BannerDataState extends State<BannerData> {
                 margin: const EdgeInsets.only(left: 12, bottom: 12, right: 12),
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFD1DC),
+                  color: const Color(0xFFE4B7A0),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(
@@ -87,7 +87,7 @@ class _BannerDataState extends State<BannerData> {
                     Text(
                       banner['name'],
                       style: const TextStyle(
-                        color: Colors.black54,
+                        color: Color(0xFF493408),
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
