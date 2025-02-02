@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:project1/detailScreen/templeDetail.dart';
+
 class templeGrid extends StatefulWidget {
   const templeGrid({super.key});
 
@@ -58,43 +60,55 @@ class _templeGridState extends State<templeGrid> {
           childAspectRatio: 0.8, // Adjust item size
         ),
         itemBuilder: (context, index) {
-          final food = temples[index];
-          return Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFD9D9D9), // Light blue background
-              borderRadius: BorderRadius.circular(16),
-            ),
+          final temple = temples[index];
+          final templeDetail = temple['temple_detail'] ?? {}; // Get nested cafe_detail
+
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TempleDetail(templeDetail: templeDetail)
+                ),
+              );
+            },
             child: Container(
-              margin: EdgeInsets.only(top: 15),
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      food['temple_image'], // Ensure this matches your API field
-                      fit: BoxFit.cover,
-                      height: 100,
-                      width: double.infinity,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.error, size: 80, color: Colors.red);
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Text(
-                      food['temple_name'], // Ensure this matches your API field
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Color(0xFF2C230F),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFD9D9D9), // Light blue background
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Container(
+                margin: EdgeInsets.only(top: 15),
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        temple['temple_image'], // Ensure this matches your API field
+                        fit: BoxFit.cover,
+                        height: 100,
+                        width: double.infinity,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(Icons.error, size: 80, color: Colors.red);
+                        },
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Text(
+                        temple['temple_name'], // Ensure this matches your API field
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Color(0xFF2C230F),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

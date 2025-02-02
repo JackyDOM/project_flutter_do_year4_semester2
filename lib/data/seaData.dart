@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:project1/detailScreen/seaDetail.dart';
+
 class seaGrid extends StatefulWidget {
   const seaGrid({super.key});
 
@@ -63,43 +65,55 @@ class _seaGridState extends State<seaGrid> {
           childAspectRatio: 0.8, // Adjust item size
         ),
         itemBuilder: (context, index) {
-          final food = seas[index];
-          return Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFE4F3FA), // Light blue background
-              borderRadius: BorderRadius.circular(16),
-            ),
+          final sea = seas[index];
+          final seaDetail = sea['detail'] ?? {}; // Get nested cafe_detail
+
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SeaDetail(seaDetail: seaDetail)
+                ),
+              );
+            },
             child: Container(
-              margin: EdgeInsets.only(top: 15),
-              child: Column(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      food['sea_image'], // Ensure this matches your API field
-                      fit: BoxFit.cover,
-                      height: 100,
-                      width: double.infinity,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(Icons.error, size: 80, color: Colors.red);
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Text(
-                      food['sea_name'], // Ensure this matches your API field
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Color(0xFF073256),
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE4F3FA), // Light blue background
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Container(
+                margin: EdgeInsets.only(top: 15),
+                child: Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        sea['sea_image'], // Ensure this matches your API field
+                        fit: BoxFit.cover,
+                        height: 100,
+                        width: double.infinity,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(Icons.error, size: 80, color: Colors.red);
+                        },
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Text(
+                        sea['sea_name'], // Ensure this matches your API field
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Color(0xFF073256),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

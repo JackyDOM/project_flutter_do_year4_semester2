@@ -80,6 +80,9 @@ class _BannerDataState extends State<BannerData> {
                           fit: BoxFit.cover,
                           height: 180, // Fixed height for consistency
                           width: 180,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.error, size: 80, color: Colors.red);
+                          },
                         ),
                       ),
                     ),
